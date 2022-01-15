@@ -2,17 +2,17 @@ package model.entities;
 
 import java.io.Serializable;
 
-public class Departments implements Serializable {
+public class Department implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;
 	
-	public Departments() {
+	public Department() {
 		
 	}
 	
-	public Departments(Integer id, String name) {
+	public Department(Integer id, String name) {
 		this.id = id;
 		this.name = name;
 	}
