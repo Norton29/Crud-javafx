@@ -3,17 +3,25 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import db.DbException;
+import gui.util.Alerts;
 import gui.util.Constraints;
+import gui.util.Utils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Department;
+import model.services.DepartmentServices;
 
 public class DepartmentFormController implements Initializable {
 
 	private Department entity;
+	
+	private DepartmentServices services;
 	
 	@FXML
 	private TextField txtId;
@@ -31,17 +39,44 @@ public class DepartmentFormController implements Initializable {
 	private Button cancelBts;
 	
 	@FXML
-	private void onSaveBtsAction() {
-		System.out.println("save");
+	private void onSaveBtsAction(ActionEvent event) {
+		if(entity == null) {
+			throw new IllegalStateException("Entity was null");
+		}
+		if (services == null) {
+			throw new IllegalStateException("Services was null");
+		}
+		try {
+			entity = getFormData();		
+			services.saveOrUpdate(entity);
+			Utils.currentStage(event).close();
+			
+		}
+		catch(DbException e) {
+			Alerts.showAlerts("Erro saving Objects", null, e.getMessage(), AlertType.ERROR);
+		}
+		
 	}
 	
+	private Department getFormData() {
+		Department obj = new Department();
+		
+		obj.setId(Utils.tryParseToInt(txtId.getText()));
+		obj.setName(txtName.getText());
+		return obj;
+	}
+
 	@FXML
-	private void onCancelBtsAction() {
-		System.out.println("cancel");
+	private void onCancelBtsAction(ActionEvent event) {
+		Utils.currentStage(event).close();
 	}
 	
 	public void setDepartment(Department entity) {
 		this.entity = entity;
+	}
+	
+	public void setDepartmentServices(DepartmentServices services) {
+		this.services = services;
 	}
 	
 	
