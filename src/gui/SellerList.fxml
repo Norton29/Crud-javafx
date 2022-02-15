@@ -9,30 +9,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="367.0" prefWidth="559.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+<VBox prefHeight="336.0" prefWidth="529.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SellerListController">
    <children>
-      <Label text="Sellers">
+      <Label text="Seller Registration">
          <font>
-            <Font name="Arial" size="14.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
          <padding>
-            <Insets left="10.0" top="10.0" />
+            <Insets left="10.0" top="5.0" />
          </padding>
       </Label>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button mnemonicParsing="false" text="Add New Seller" />
+          <Button fx:id="newButton" mnemonicParsing="false" onAction="#onNewButtonAction" text="New" />
         </items>
       </ToolBar>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableViewDep" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="ID" />
-          <TableColumn prefWidth="75.0" text="Name" />
-            <TableColumn prefWidth="75.0" text="E-mail" />
-            <TableColumn prefWidth="75.0" text="Birth Date" />
-            <TableColumn prefWidth="75.0" text="Salary" />
-            <TableColumn prefWidth="75.0" text="Department" />
+          <TableColumn fx:id="idTableCollumn" prefWidth="75.0" text="Id" />
+          <TableColumn fx:id="nameTableCollumn" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="75.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="75.0" text=" " />
         </columns>
       </TableView>
    </children>
