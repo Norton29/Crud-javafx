@@ -31,6 +31,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Seller;
+import model.services.DepartmentServices;
 import model.services.SellerServices;
 
 public class SellerListController implements Initializable, DataChangeListener {
@@ -52,6 +53,9 @@ public class SellerListController implements Initializable, DataChangeListener {
 	private TableColumn<Seller, Date> birthDateTableCollumn;
 	@FXML
 	private TableColumn<Seller, Double> baseSalaryTableCollumn;
+	
+	@FXML
+	private TableColumn<Seller, String> departmentTableCollum;
 
 	@FXML
 	private TableColumn<Seller, Seller> tableColumnEDIT;
@@ -85,6 +89,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 		Utils.formatTableColumnDate(birthDateTableCollumn, "dd/MM/yyyy");
 		baseSalaryTableCollumn.setCellValueFactory(new PropertyValueFactory<>("salary"));
 		Utils.formatTableColumnDouble(baseSalaryTableCollumn, 2);
+		departmentTableCollum.setCellValueFactory(new PropertyValueFactory<>("department"));
+		
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewDep.prefHeightProperty().bind(stage.heightProperty());
@@ -109,7 +115,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 
 			SellerFormController controller = loader.getController();
 			controller.setSeller(obj);
-			controller.setSellerServices(services);
+			controller.setServices(new SellerServices(), new DepartmentServices() );
+			controller.loadAssociatedObjects();
 			controller.subscribeDataChangeListener(this);
 			controller.updateFormData();
 
@@ -122,6 +129,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 			dialogStage.showAndWait();
 
 		} catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlerts("Error", "Error to input new Seller", e.getMessage(), AlertType.ERROR);
 		}
 		
